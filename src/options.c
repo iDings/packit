@@ -217,7 +217,7 @@ void parse_inject_options(int argc, char *argv[], u_int16_t iopt)
 				g_ahdr_o.op_type = ARPOP_REVREQUEST;	/* Update init */
 				g_init_type = 0;
 				opts = ":A:b:c:e:E:i:p:Rs:S:vx:X:y:Y:";
-			} else if (!strncasecmp(optarg, "RAWIP", 3)) {
+			} else if (!strncasecmp(optarg, "RAWIP", 5)) {
 				if (g_p_mode == M_TRACE)
 					fatal_error
 					    ("RAW is not supported with trace mode.");
@@ -227,6 +227,15 @@ void parse_inject_options(int argc, char *argv[], u_int16_t iopt)
 				g_rawip = g_ip4hdr_o.p = IPPROTO_RAW;
 				g_injection_type = ETHERTYPE_IP;
 				opts = ":b:c:d:e:E:f:i:n:o:p:Rs:T:U:vV:w:Z:";
+			} else if (!strncasecmp(optarg, "RAWETH", 6)) {
+				if (g_p_mode == M_TRACE)
+					fatal_error
+						("RAWETH is not supported with trace mode.");
+#ifdef DEBUG
+				fprintf(stdout, "DEBUG: raw ethernet injection\n");
+#endif
+				g_injection_type_raw = 1;
+				opts = ":b:c:hH:e:E:i:I:p:Rvw:Z:B:";
 			} else {
 				print_usage();
 				exit(EXIT_FAILURE);
@@ -291,6 +300,9 @@ static void parse_inject(int argc, char *argv[], char *opts)
 			break;
 		case 'b':
 			g_burst_rate = (u_int16_t) atoi(optarg);
+			break;
+		case 'B':
+			g_injection_type = (u_int16_t) strtoll(optarg, (char **)NULL, 16);
 			break;
 		case 'c':
 			if (g_p_mode == M_TRACE

@@ -183,6 +183,7 @@ extern u_int8_t g_hex_payload;
 extern u_int8_t *g_s_d_port;
 extern u_int8_t g_hwaddr_p[18];
 extern u_int8_t g_rawip;
+extern u_int8_t g_injection_type_raw;
 
 extern struct timeval g_bf_pcap;
 extern struct timeval g_af_pcap;

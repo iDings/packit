@@ -78,6 +78,7 @@ u_int8_t g_hex_payload;
 u_int8_t *g_s_d_port;
 u_int8_t g_hwaddr_p[18];
 u_int8_t g_rawip;
+u_int8_t g_injection_type_raw;
 
 struct timeval g_bf_pcap;
 struct timeval g_af_pcap;

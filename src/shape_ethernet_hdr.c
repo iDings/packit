@@ -78,8 +78,8 @@ libnet_t *shape_ethernet_hdr(libnet_t * g_pkt_d)
 					ud_addr,
 					us_addr,
 					g_injection_type,
-					NULL,
-					0,
+					(g_payload && g_injection_type_raw) ? g_payload : NULL,
+					(g_injection_type_raw && g_payload_len) ? g_payload_len: 0,
 					g_pkt_d,
 					0)
 				: libnet_build_802_1q(
@@ -90,8 +90,8 @@ libnet_t *shape_ethernet_hdr(libnet_t * g_pkt_d)
 					(g_ehdr_o.dot1q_vlan_id_cpi_prio >> 12) & 1,	/* cpi */
 					g_ehdr_o.dot1q_vlan_id_cpi_prio & 0xFFF,	/* id */
 					g_injection_type,
-					NULL,
-					0,
+					(g_payload && g_injection_type_raw) ? g_payload : NULL,
+					(g_injection_type_raw && g_payload_len) ? g_payload_len: 0,
 					g_pkt_d,
 					0)) == -1) {
 		fatal_error("Unable to build ethernet header");
